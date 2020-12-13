@@ -18,7 +18,13 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2020-12-13T05:02:49.611Z[GMT]")public class TurnOnDeviceApiServiceImpl extends TurnOnDeviceApiService {
     @Override
     public Response turnOnDeviceEstanciaidPut(String estanciaid, Boolean body, SecurityContext securityContext) throws NotFoundException {
-        // do some magic!
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+        Estancia e = server.getInstance().devolverEstancia(estanciaid);
+        if(e.getStatus()==false){
+            e.setStatus(true);
+            server.getInstance().uploadEstancia(e);
+        }
+       
+        String response = "Se ha encendido el dispositivo térmico y debe ser "+Boolean.toString(e.getStatus());
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, response)).build();
     }
 }
