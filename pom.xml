@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.swagger</groupId>
   <artifactId>swagger-jaxrs-server</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <name>swagger-jaxrs-server</name>
   <version>1.0.0</version>
 
@@ -34,6 +34,27 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-dependency-plugin</artifactId>
+<version>2.4</version>
+<executions>
+<execution>
+<phase>package</phase>
+<goals><goal>copy</goal></goals>
+<configuration>
+<artifactItems>
+<artifactItem>
+<groupId>org.eclipse.jetty</groupId>
+<artifactId>jetty-runner</artifactId>
+<version>9.4.9.v20180320</version>
+<destFileName>jetty-runner.jar</destFileName>
+</artifactItem>
+</artifactItems>
+</configuration>
+</execution>
+</executions>
+</plugin>
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
@@ -168,13 +189,6 @@
     </dependency>
 
   
-    <!-- Bean Validation API support -->
-    <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>${beanvalidation-version}</version>
-        <scope>provided</scope>
-    </dependency>
 
   </dependencies>
   <repositories>
